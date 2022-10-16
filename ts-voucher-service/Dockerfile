@@ -1,15 +1,8 @@
-FROM python:3
+FROM amazoncorretto:8
 
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
-RUN mkdir -p /app
-WORKDIR /app
+ADD ./target/ts-inside-payment-service-1.0.jar /app/
+CMD ["java", "-Xmx200m",  "-jar", "/app/ts-inside-payment-service-1.0.jar"]
 
-COPY requirements.txt ./
-RUN pip install cryptography
-RUN pip install --no-cache-dir -r requirements.txt
-
-ADD ./server.py /app/
-CMD [ "python", "server.py" ]
-
-EXPOSE 16101
+EXPOSE 18673

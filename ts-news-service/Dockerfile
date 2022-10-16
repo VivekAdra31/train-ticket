@@ -1,11 +1,8 @@
-FROM mrrm/web.go
+FROM amazoncorretto:8
 
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
-RUN mkdir -p /app
-WORKDIR /app
+ADD ./target/ts-preserve-service-1.0.jar /app/
+CMD ["java", "-Xmx200m",  "-jar", "/app/ts-preserve-service-1.0.jar"]
 
-ADD ./src/main/main.go /app/
-RUN go build
-CMD [ "./app" ]
-
-EXPOSE 12862
+EXPOSE 14568

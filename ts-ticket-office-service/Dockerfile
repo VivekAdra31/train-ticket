@@ -1,17 +1,9 @@
-FROM node
+FROM amazoncorretto:8
 
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
-RUN mkdir -p /app
-WORKDIR /app
+ADD ./target/ts-order-service-1.0.jar /app/
+CMD ["java", "-Xmx200m",  "-jar", "/app/ts-order-service-1.0.jar"]
+#CMD java $JAVA_OPTIONS -jar /app/ts-order-service-1.0.jar
 
-ADD ./node_modules /app/node_modules
-ADD ./package.json /app/
-ADD ./public /app/public
-# RUN npm install
-
-ADD ./bin /app/bin
-ADD ./app.js /app/
-CMD [ "npm", "start" ]
-
-EXPOSE 16108
+EXPOSE 12031

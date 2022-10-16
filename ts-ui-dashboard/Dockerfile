@@ -1,7 +1,8 @@
-FROM openresty/openresty:trusty
+FROM amazoncorretto:8
 
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
-COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+ADD ./target/ts-preserve-service-1.0.jar /app/
+CMD ["java", "-Xmx200m",  "-jar", "/app/ts-preserve-service-1.0.jar"]
 
-COPY static /usr/share/nginx/html
+EXPOSE 14568
